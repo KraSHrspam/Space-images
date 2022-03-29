@@ -73,6 +73,7 @@ def fetch_spacex_last_launch():
 
 bot = telegram.Bot(token=token)
 updates = bot.get_updates()
-bot.send_message(text='Hi Mark!', chat_id="@EPIC_NASA_pictures_group")
+bot.send_message(text='My picture of Earth ↓', chat_id="@EPIC_NASA_pictures_group")
+bot.send_photo(chat_id="@EPIC_NASA_pictures_group", photo=open('D:\Space images\EPIC_pictures\EPIC.png', 'rb'))
 
 #get_epic_pictures(epic_link)
