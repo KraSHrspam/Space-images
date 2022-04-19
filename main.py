@@ -86,6 +86,3 @@ def publish_infinite(token):
                 print (picture_adress)
                 bot.send_photo(chat_id="@EPIC_NASA_pictures_group", photo=open(picture_adress, 'rb'))
                 sleep(float(period))
-
-print(token)
-publish_infinite(token)
