@@ -2,20 +2,9 @@ import requests
 import os
 import telegram
 from time import sleep
-from dotenv import load_dotenv
+from dotenv import dotenv_values
 from urllib.parse import urlparse
 from telegram.ext import Updater, CommandHandler, CallbackContext
-
-api_key = os.getenv('API_KEY')
-period = os.getenv('PERIOD')
-
-link = "https://api.spacexdata.com/v3/launches"
-apod_link = f"https://api.nasa.gov/planetary/apod?count=50&api_key={api_key}"
-epic_link = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={api_key}"
-
-load_dotenv()
-token = os.getenv('TOKEN')
-
 
 def get_apod(apod_link):
     apod_picture_num = 0
@@ -86,3 +75,12 @@ def publish_infinite(token):
                 print (picture_adress)
                 bot.send_photo(chat_id="@EPIC_NASA_pictures_group", photo=open(picture_adress, 'rb'))
                 sleep(float(period))
+
+if __name__ == '__main__':
+    api_key = dotenv_values(".env")["API_KEY"]
+    period = dotenv_values(".env")["PERIOD"]
+    link = "https://api.spacexdata.com/v3/launches"
+    apod_link = f"https://api.nasa.gov/planetary/apod?count=50&api_key={api_key}"
+    epic_link = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={api_key}"
+    token = dotenv_values(".env")["TOKEN"]
+    publish_infinite(token)
