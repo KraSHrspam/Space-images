@@ -4,9 +4,9 @@ import telegram
 from time import sleep
 from dotenv import dotenv_values
 from urllib.parse import urlparse
-from telegram.ext import Updater, CommandHandler, CallbackContext
 
-def get_apod(apod_link):
+def get_apod(apod_link, api_key):
+    apod_link = f"https://api.nasa.gov/planetary/apod?count=50&api_key={api_key}"
     apod_picture_num = 0
     response = requests.get(apod_link)
     response.raise_for_status()
@@ -18,7 +18,8 @@ def get_apod(apod_link):
             print("Ошибка,Ошибка!")
 
 
-def get_epic_pictures(epic_link):
+def get_epic_picture(epic_link, api_key):
+    epic_link = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={api_key}"
     epic_picture_num = 0
     response = requests.get(epic_link)
     response.raise_for_status()
@@ -50,7 +51,7 @@ def picture_download(link, picture_name):
         file.write(response.content)
 
 
-def get_spacex_pictures():
+def get_spacex_picture_url():
     link = "https://api.spacexdata.com/v3/launches"
     response = requests.get(link)
     response.raise_for_status()
@@ -59,7 +60,7 @@ def get_spacex_pictures():
 
 def fetch_spacex_last_launch():
     picture_num = 0
-    pictures_of_rocket = get_spacex_pictures()
+    pictures_of_rocket = get_spacex_picture_url()
     for url in pictures_of_rocket:
         picture_num += 1
         picture_download(url, f"SpaceX_pictures/SpaceX{picture_num}")
@@ -73,14 +74,15 @@ def publish_infinite(token):
             for file in files:
                 picture_adress = address+'/'+file
                 print (picture_adress)
-                bot.send_photo(chat_id="@EPIC_NASA_pictures_group", photo=open(picture_adress, 'rb'))
+                with open(picture_adress, "rb") as file:
+                    photo = file.read()
+                bot.send_photo(chat_id="@EPIC_NASA_pictures_group", photo=photo)
                 sleep(float(period))
 
 if __name__ == '__main__':
     api_key = dotenv_values(".env")["API_KEY"]
     period = dotenv_values(".env")["PERIOD"]
-    link = "https://api.spacexdata.com/v3/launches"
-    apod_link = f"https://api.nasa.gov/planetary/apod?count=50&api_key={api_key}"
-    epic_link = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={api_key}"
     token = dotenv_values(".env")["TOKEN"]
+    chat_id = dotenv_values(".env")["CHAT_ID"]
+
     publish_infinite(token)
