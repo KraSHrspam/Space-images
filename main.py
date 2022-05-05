@@ -1,40 +1,43 @@
 import requests
 import os
 import telegram
+import logging
 from time import sleep
 from dotenv import dotenv_values
 from urllib.parse import urlparse
+from datetime import datetime
 
 def get_apod(apod_link, api_key):
-    apod_link = f"https://api.nasa.gov/planetary/apod?count=50&api_key={api_key}"
+    payload = {"api_key": f"{api_key}",
+               "count": "50"}
+    apod_link = "https://api.nasa.gov/planetary/apod"
     apod_picture_num = 0
-    response = requests.get(apod_link)
+    response = requests.get(apod_link, params=payload)
     response.raise_for_status()
     for apod_picture in response.json():
         apod_picture_num += 1
         try:
             picture_download(apod_picture["url"], f"APOD_pictures/Apod{apod_picture_num}")
-        except:
-            print("Ошибка,Ошибка!")
+        except requests.exceptions.HTTPError as error:
+            exit("Can't get data from server:\n{0}".format(error))
 
 
-def get_epic_picture(epic_link, api_key):
-    epic_link = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={api_key}"
+def get_epic_picture(api_key):
+    payload = {"api_key": f"{api_key}"}
+    epic_link = "https://api.nasa.gov/EPIC/api/natural/images"
     epic_picture_num = 0
-    response = requests.get(epic_link)
+    response = requests.get(epic_link, params=payload)
     response.raise_for_status()
     for epic_picture in response.json():
         epic_picture_num += 1
-        pic_name = epic_picture['image']
-        year = pic_name[8:12]
-        month = pic_name[12:14]
-        day = pic_name[14:16]
-        finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{epic_picture['image']}.png?api_key=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbV"
-        print(finished_epic_link)
+        date = epic_picture["date"]
+        date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+        date = date.strftime("%Y/%m/%d")
+        finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date}/png/{epic_picture['image']}.png"
         try:
-            picture_download(finished_epic_link, f"EPIC_pictures/EPIC{epic_picture_num}")
-        except:
-            print("ЭПИЧЕСКАЯ ОШИБКА!")
+            picture_download(finished_epic_link, f"EPIC_pictures/EPIC{epic_picture_num}", params=payload)
+        except requests.exceptions.HTTPError as error:
+            exit("Can't get data from server:\n{0}".format(error))
 
 
 def get_image_extansion(picture_link):
@@ -44,8 +47,8 @@ def get_image_extansion(picture_link):
     return extension_of_url[1]
 
 
-def picture_download(link, picture_name):
-    response = requests.get(link)
+def picture_download(link, picture_name, params=""):
+    response = requests.get(link, params=params)
     response.raise_for_status()
     with open(picture_name + get_image_extansion(link), 'wb') as file:
         file.write(response.content)
@@ -59,12 +62,9 @@ def get_spacex_picture_url():
 
 
 def fetch_spacex_last_launch():
-    picture_num = 0
     pictures_of_rocket = get_spacex_picture_url()
-    for url in pictures_of_rocket:
-        picture_num += 1
-        picture_download(url, f"SpaceX_pictures/SpaceX{picture_num}")
-
+    for picture_num, picture in enumerate(pictures_of_rocket):
+        picture_download(picture, f"SpaceX_pictures/SpaceX{picture_num}")
 
 def publish_infinite(token):
     bot = telegram.Bot(token=token)
@@ -73,7 +73,6 @@ def publish_infinite(token):
         for address, dirs, files in os.walk("EPIC_pictures"):
             for file in files:
                 picture_adress = address+'/'+file
-                print (picture_adress)
                 with open(picture_adress, "rb") as file:
                     photo = file.read()
                 bot.send_photo(chat_id="@EPIC_NASA_pictures_group", photo=photo)
