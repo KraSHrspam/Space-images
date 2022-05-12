@@ -7,19 +7,17 @@ from dotenv import dotenv_values
 from urllib.parse import urlparse
 from datetime import datetime
 
-def get_apod(apod_link, api_key):
+def get_apod(api_key):
     payload = {"api_key": f"{api_key}",
                "count": "50"}
     apod_link = "https://api.nasa.gov/planetary/apod"
-    apod_picture_num = 0
+    picture_apod_num = 0
     response = requests.get(apod_link, params=payload)
     response.raise_for_status()
-    for apod_picture in response.json():
-        apod_picture_num += 1
-        try:
-            picture_download(apod_picture["url"], f"APOD_pictures/Apod{apod_picture_num}")
-        except requests.exceptions.HTTPError as error:
-            exit("Can't get data from server:\n{0}".format(error))
+    for picture_apod in response.json():
+        picture_apod_num += 1
+        picture_download(picture_apod["url"], f"APOD_pictures/Apod{picture_apod_num}")
+        print("#Загружаю фотку")
 
 
 def get_epic_picture(api_key):
@@ -34,13 +32,10 @@ def get_epic_picture(api_key):
         date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
         date = date.strftime("%Y/%m/%d")
         finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date}/png/{epic_picture['image']}.png"
-        try:
-            picture_download(finished_epic_link, f"EPIC_pictures/EPIC{epic_picture_num}", params=payload)
-        except requests.exceptions.HTTPError as error:
-            exit("Can't get data from server:\n{0}".format(error))
+        picture_download(finished_epic_link, f"EPIC_pictures/EPIC{epic_picture_num}", params=payload)
 
 
-def get_image_extansion(picture_link):
+def get_image_extension(picture_link):
     parse_url = urlparse(picture_link)
     finished_parse_url = parse_url.path
     extension_of_url = os.path.splitext(finished_parse_url)
@@ -50,7 +45,7 @@ def get_image_extansion(picture_link):
 def picture_download(link, picture_name, params=""):
     response = requests.get(link, params=params)
     response.raise_for_status()
-    with open(picture_name + get_image_extansion(link), 'wb') as file:
+    with open(picture_name + get_image_extension(link), 'wb') as file:
         file.write(response.content)
 
 
@@ -83,5 +78,20 @@ if __name__ == '__main__':
     period = dotenv_values(".env")["PERIOD"]
     token = dotenv_values(".env")["TOKEN"]
     chat_id = dotenv_values(".env")["CHAT_ID"]
+
+    try:
+        get_apod(api_key)
+    except requests.exceptions.HTTPError as error:
+        logging_error("Can't get data from server:\n{0}".format(error))
+
+    try:
+        get_epic_picture(api_key)
+    except requests.exceptions.HTTPError as error:
+        logging_error("Can't get data from server:\n{0}".format(error))
+
+    try:
+        fetch_spacex_last_launch()
+    except requests.exceptions.HTTPError as error:
+        logging_error("Can't get data from server:\n{0}".format(error))
 
     publish_infinite(token)
