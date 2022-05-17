@@ -7,7 +7,7 @@ from dotenv import dotenv_values
 from urllib.parse import urlparse
 from datetime import datetime
 
-def get_apod(api_key):
+def get_apod_pictures(api_key):
     payload = {"api_key": f"{api_key}",
                "count": "50"}
     apod_link = "https://api.nasa.gov/planetary/apod"
@@ -20,7 +20,7 @@ def get_apod(api_key):
         print("#Загружаю фотку")
 
 
-def get_epic_picture(api_key):
+def get_epic_pictures(api_key):
     payload = {"api_key": f"{api_key}"}
     epic_link = "https://api.nasa.gov/EPIC/api/natural/images"
     epic_picture_num = 0
@@ -29,9 +29,9 @@ def get_epic_picture(api_key):
     for epic_picture in response.json():
         epic_picture_num += 1
         date = epic_picture["date"]
-        date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
-        date = date.strftime("%Y/%m/%d")
-        finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date}/png/{epic_picture['image']}.png"
+        parsed_date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+        date_with_slash = parsed_date.strftime("%Y/%m/%d")
+        finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date_with_slash}/png/{epic_picture['image']}.png"
         picture_download(finished_epic_link, f"EPIC_pictures/EPIC{epic_picture_num}", params=payload)
 
 
