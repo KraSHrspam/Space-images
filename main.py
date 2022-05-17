@@ -68,7 +68,7 @@ def publish_infinite(token):
     while True:
         for address, dirs, files in os.walk("EPIC_pictures"):
             for file in files:
-                picture_adress = address+'/'+file
+                picture_adress = (f"{address}'/'{file}")
                 with open(picture_adress, "rb") as file:
                     photo = file.read()
                 bot.send_photo(chat_id="@EPIC_NASA_pictures_group", photo=photo)
