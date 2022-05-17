@@ -37,8 +37,8 @@ def get_epic_pictures(api_key):
 
 def get_image_extension(picture_link):
     parse_url = urlparse(picture_link)
-    finished_parse_url = parse_url.path
-    extension_of_url = os.path.splitext(finished_parse_url)
+    parse_url_path = parse_url.path
+    extension_of_url = os.path.splitext(parse_url_path)
     return extension_of_url[1]
 
 
@@ -51,9 +51,10 @@ def picture_download(link, picture_name, params=""):
 
 def get_spacex_picture_url():
     link = "https://api.spacexdata.com/v3/launches"
+    launch_number = os.getenv("SPACEX_LAUNCH_NUMBER")
     response = requests.get(link)
     response.raise_for_status()
-    return response.json()[66]["links"]["flickr_images"]
+    return response.json()[launch_number]["links"]["flickr_images"]
 
 
 def fetch_spacex_last_launch():
@@ -80,7 +81,7 @@ if __name__ == '__main__':
     chat_id = dotenv_values(".env")["CHAT_ID"]
 
     try:
-        get_apod(api_key)
+        get_apod_pictures(api_key)
     except requests.exceptions.HTTPError as error:
         logging_error("Can't get data from server:\n{0}".format(error))
 
