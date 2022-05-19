@@ -7,6 +7,7 @@ from dotenv import dotenv_values
 from urllib.parse import urlparse
 from datetime import datetime
 
+
 def get_apod_pictures(api_key):
     payload = {"api_key": f"{api_key}",
                "count": "50"}
@@ -61,6 +62,7 @@ def fetch_spacex_last_launch():
     pictures_of_rocket = get_spacex_picture_url()
     for picture_num, picture in enumerate(pictures_of_rocket):
         picture_download(picture, f"SpaceX_pictures/SpaceX{picture_num}")
+
 
 def publish_infinite(token):
     bot = telegram.Bot(token=token)
