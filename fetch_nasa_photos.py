@@ -5,6 +5,8 @@ from datetime import datetime
 from urllib.parse import urlparse
 from dotenv import dotenv_values
 COUNT=50
+EPIC_path="EPIC_pictures"
+APOD_path="APOD_pictures"
 
 def get_apod_pictures(api_key):
     payload = {"api_key": f"{api_key}",
@@ -15,7 +17,7 @@ def get_apod_pictures(api_key):
     response.raise_for_status()
     for picture_apod in response.json():
         picture_apod_num += 1
-        picture_download(picture_apod["url"], f"APOD_pictures/Apod{picture_apod_num}")
+        picture_download(picture_apod["url"], f"{APOD_path}/Apod{picture_apod_num}")
         print("#Загружаю фотку")
 
 
@@ -31,7 +33,7 @@ def get_epic_pictures(api_key):
         parsed_date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
         date_with_slash = parsed_date.strftime("%Y/%m/%d")
         finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date_with_slash}/png/{epic_picture['image']}.png"
-        picture_download(finished_epic_link, f"EPIC_pictures/EPIC{epic_picture_num}", params=payload)
+        picture_download(finished_epic_link, f"{EPIC_path}/EPIC{epic_picture_num}", params=payload)
 
 
 def get_image_extension(picture_link):
@@ -50,8 +52,6 @@ def picture_download(link, picture_name, params=""):
 if __name__ == '__main__':
     api_key = dotenv_values(".env")["API_KEY"]
     chat_id = dotenv_values(".env")["CHAT_ID"]
-
-print("Начало рботы")
 
 try:
         get_apod_pictures(api_key)
