@@ -7,32 +7,30 @@ COUNT=50
 EPIC_path="EPIC_pictures"
 APOD_path="APOD_pictures"
 
+
 def get_apod_pictures(api_key):
     payload = {"api_key": f"{api_key}",
                "count": {COUNT}}
     apod_link = "https://api.nasa.gov/planetary/apod"
-    picture_apod_num = 0
     response = requests.get(apod_link, params=payload)
     response.raise_for_status()
-    for picture_apod in response.json():
-        picture_apod_num += 1
-        picture_download(picture_apod["url"], f"{APOD_path}/Apod{picture_apod_num}")
-        print("#Загружаю фотку")
+    for apod_picture_num, picture_apod in enumerate(response.json()):
+        picture_download(picture_apod["url"], f"{APOD_path}/Apod{apod_picture_num}")
+        print(f"#Загружаю Апод фотку номер {apod_picture_num}")
 
 
 def get_epic_pictures(api_key):
     payload = {"api_key": f"{api_key}"}
     epic_link = "https://api.nasa.gov/EPIC/api/natural/images"
-    epic_picture_num = 0
     response = requests.get(epic_link, params=payload)
     response.raise_for_status()
-    for epic_picture in response.json():
-        epic_picture_num += 1
+    for epic_picture_num, epic_picture in enumerate(response.json()):
         date = epic_picture["date"]
         parsed_date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
         date_with_slash = parsed_date.strftime("%Y/%m/%d")
         finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date_with_slash}/png/{epic_picture['image']}.png"
         picture_download(finished_epic_link, f"{EPIC_path}/EPIC{epic_picture_num}", params=payload)
+        print(f"#Загружаю Эпик фотку номер {epic_picture_num}")
 
 
 if __name__ == '__main__':
