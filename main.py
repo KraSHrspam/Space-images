@@ -3,13 +3,13 @@ import os
 import telegram
 from time import sleep
 from dotenv import dotenv_values
-
+EPIC_path="EPIC_pictures"
 
 def publish_infinite(token):
     bot = telegram.Bot(token=token)
     updates = bot.get_updates()
     while True:
-        for address, dirs, files in os.walk("EPIC_pictures"):
+        for address, dirs, files in os.walk(f"{EPIC_path}"):
             for file in files:
                 picture_adress = f"{address}/{file}"
                 with open(picture_adress, "rb") as file:

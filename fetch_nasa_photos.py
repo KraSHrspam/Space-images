@@ -1,9 +1,8 @@
 import requests
-import os
 import logging
 from datetime import datetime
-from urllib.parse import urlparse
 from dotenv import dotenv_values
+from tools import picture_download
 COUNT=50
 EPIC_path="EPIC_pictures"
 APOD_path="APOD_pictures"
@@ -35,19 +34,6 @@ def get_epic_pictures(api_key):
         finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date_with_slash}/png/{epic_picture['image']}.png"
         picture_download(finished_epic_link, f"{EPIC_path}/EPIC{epic_picture_num}", params=payload)
 
-
-def get_image_extension(picture_link):
-    parse_url = urlparse(picture_link)
-    parse_url_path = parse_url.path
-    extension_of_url = os.path.splitext(parse_url_path)
-    return extension_of_url[1]
-
-
-def picture_download(link, picture_name, params=""):
-    response = requests.get(link, params=params)
-    response.raise_for_status()
-    with open(picture_name + get_image_extension(link), 'wb') as file:
-        file.write(response.content)
 
 if __name__ == '__main__':
     api_key = dotenv_values(".env")["API_KEY"]
