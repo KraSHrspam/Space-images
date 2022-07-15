@@ -1,5 +1,6 @@
-import requests
 import os
+import requests
+
 from tools import picture_download
 
 
@@ -15,3 +16,6 @@ def fetch_spacex_last_launch():
     pictures_of_rocket = get_spacex_picture_url()
     for picture_num, picture in enumerate(pictures_of_rocket):
         picture_download(picture, f"SpaceX_pictures/SpaceX{picture_num}")
+
+if __name__ == '__main__':
+    launch_number = os.getenv("SPACEX_LAUNCH_NUMBER")

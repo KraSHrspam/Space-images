@@ -1,7 +1,9 @@
-import requests
 import logging
+import requests
 from datetime import datetime
+
 from dotenv import dotenv_values
+
 from tools import picture_download
 COUNT=50
 EPIC_path="EPIC_pictures"

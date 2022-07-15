@@ -1,7 +1,8 @@
-import requests
 import os
-import telegram
+import requests
 from time import sleep
+
+import telegram
 from dotenv import dotenv_values
 EPIC_path="EPIC_pictures"
 
@@ -11,10 +12,9 @@ def publish_infinite(token):
     while True:
         for address, dirs, files in os.walk(f"{EPIC_path}"):
             for file in files:
-                picture_adress = f"{address}/{file}"
-                with open(picture_adress, "rb") as file:
-                    photo = file.read()
-                bot.send_photo(chat_id=f"{CHAT_ID}", photo=photo)
+                picture_address = f"{address}/{file}"
+                with open(picture_address, "rb") as file:
+                    bot.send_photo(chat_id=f"{CHAT_ID}", photo=file.read)
                 sleep(float(period))
 
 
