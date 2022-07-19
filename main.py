@@ -19,9 +19,7 @@ def publish_infinite(token):
 
 
 if __name__ == '__main__':
-    api_key = dotenv_values(".env")["API_KEY"]
+    api_key = dotenv_values(".env")["VK_IMPLICIT_FLOW_TOKEN"]
     period = dotenv_values(".env")["PERIOD"]
-    token = dotenv_values(".env")["TOKEN"]
-    chat_id = dotenv_values(".env")["CHAT_ID"]
-
-    publish_infinite(token)
+    token = dotenv_values(".env")["TELEGRAM_TOKEN"]
+    chat_id = dotenv_values(".env")["TELEGRAM_CHAT_ID"]
