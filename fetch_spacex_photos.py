@@ -18,4 +18,4 @@ def fetch_spacex_last_launch():
         picture_download(picture, f"SpaceX_pictures/SpaceX{picture_num}")
 
 if __name__ == '__main__':
-    launch_number = os.getenv("SPACEX_LAUNCH_NUMBER")
+    launch_number = dotenv_values(".env")["SPACEX_LAUNCH_NUMBER"]
