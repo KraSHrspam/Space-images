@@ -39,9 +39,10 @@ pip install -r requirements.txt
 + В командную строку вписать `python main.py`
 
 #### Команды для запуска
-+ fetch_apod_pictures - Скачивает apod картинки
-+ fetch_EPIC_photos - скачивает EPIC картинки (картинки с землёй)
-+ fetch_spacex_photos - скачивет картинки SpaceX
++ fetch_apod_pictures.py - Скачивает apod картинки (картинки космоса
++ fetch_EPIC_photos.py - скачивает EPIC картинки (картинки с землёй)
++ fetch_spacex_photos.py - скачивет картинки SpaceX (картинки взлета ракет SpaceX)
++ main.py - Отправляет картинки в тг канал
 
 ```
 python *название скрипта*
