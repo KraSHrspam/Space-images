@@ -1,4 +1,5 @@
 import logging
+import os
 import requests
 from datetime import datetime
 
@@ -16,12 +17,12 @@ def get_apod_pictures(api_key):
     response = requests.get(apod_link, params=payload)
     response.raise_for_status()
     for apod_picture_num, picture_apod in enumerate(response.json()):
-        picture_download(picture_apod["url"], f"{APOD_path}/Apod{apod_picture_num}")
+        picture_download(picture_apod["url"], os.path.join(APOD_path, f"{apod_picture_num}"))
         print(f"#Загружаю Апод фотку номер {apod_picture_num}")
 
 
 if __name__ == '__main__':
-    api_key = dotenv_values(".env")["API_KEY"]
+    api_key = dotenv_values(".env")["TELEGRAM_IMPLICIT_FLOW_TOKEN"]
 
 
 try:

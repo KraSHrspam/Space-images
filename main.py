@@ -12,7 +12,7 @@ def publish_infinite(token):
     while True:
         for address, dirs, files in os.walk(f"{EPIC_path}"):
             for file in files:
-                picture_address = f"{address}/{file}"
+                picture_address = os.path.join(addres, file)
                 with open(picture_address, "rb") as file:
                     bot.send_photo(chat_id=f"{CHAT_ID}", photo=file.read)
                 sleep(float(period))

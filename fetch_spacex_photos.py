@@ -15,7 +15,10 @@ def get_spacex_picture_url():
 def fetch_spacex_last_launch():
     pictures_of_rocket = get_spacex_picture_url()
     for picture_num, picture in enumerate(pictures_of_rocket):
-        picture_download(picture, f"SpaceX_pictures/SpaceX{picture_num}")
+        picture_name = f"SpaceX{picture_num}"
+        picture_download(picture, os.path.join())
 
 if __name__ == '__main__':
     launch_number = dotenv_values(".env")["SPACEX_LAUNCH_NUMBER"]
+    picture_dir = "SpaceX_pictures"
+    os.makedirs(picture_dir, exist_ok=True)
