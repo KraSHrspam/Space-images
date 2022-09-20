@@ -6,7 +6,7 @@ from datetime import datetime
 from dotenv import dotenv_values
 
 from tools import picture_download
-EPIC_path="EPIC_pictures"
+EPIC_file_path="EPIC_pictures"
 
 
 def get_epic_pictures(api_key):
@@ -20,7 +20,7 @@ def get_epic_pictures(api_key):
         date_with_slash = parsed_date.strftime("%Y/%m/%d")
         finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date_with_slash}/png/{epic_picture['image']}.png"
         picture_name = f"EPIC{epic_picture_num}"
-        picture_download(finished_epic_link, os.path.join(f"{EPIC_path}", picture_name), params=payload)
+        picture_download(finished_epic_link, os.path.join(f"{EPIC_file_path}", picture_name), params=payload)
         print(f"#Загружаю Эпик фотку номер {epic_picture_num}")
 
 if __name__ == '__main__':

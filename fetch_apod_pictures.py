@@ -6,7 +6,7 @@ from datetime import datetime
 from dotenv import dotenv_values
 
 from tools import picture_download
-APOD_path="APOD_pictures"
+APOD_file_path="APOD_pictures"
 COUNT=50
 
 
@@ -17,7 +17,7 @@ def get_apod_pictures(api_key):
     response = requests.get(apod_link, params=payload)
     response.raise_for_status()
     for apod_picture_num, picture_apod in enumerate(response.json()):
-        picture_download(picture_apod["url"], os.path.join(APOD_path, f"{apod_picture_num}"))
+        picture_download(picture_apod["url"], os.path.join(APOD_file_path, f"{apod_picture_num}"))
         print(f"#Загружаю Апод фотку номер {apod_picture_num}")
 
 
