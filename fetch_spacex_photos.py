@@ -19,6 +19,6 @@ def fetch_spacex_last_launch():
         picture_download(picture, os.path.join())
 
 if __name__ == '__main__':
-    launch_number = dotenv_values(".env")["SPACEX_LAUNCH_NUMBER"]
+    launch_number = os.getenv["SPACEX_LAUNCH_NUMBER"]
     picture_dir = "SpaceX_pictures"
     os.makedirs(picture_dir, exist_ok=True)

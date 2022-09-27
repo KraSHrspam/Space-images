@@ -11,5 +11,5 @@ def get_image_extension(picture_link):
 def picture_download(link, picture_path, params=""):
     response = requests.get(link, params=params)
     response.raise_for_status()
-    with open(picture_path + get_image_extension(link), 'wb') as file:
+    with open(f"{picture_path}{get_image_extension(link)}", 'wb') as file:
         file.write(response.content)
