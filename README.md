@@ -7,11 +7,11 @@
 Для начала вам нужно создать файлик `.env` Он должен выглядеть вот так
 ```
 TELEGRAM_TOKEN=5136941251:AAG7HY1337YHrSyg0gZNS64sLрsvFJxF2UE
-TELEGRAM_IMPLICIT_FLOW_TOKEN=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbV
+NASA_IMPLICIT_FLOW_TOKEN=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbV
 SPACEX_LAUNCH_NUMBER=10
 ```
 + В переменной `TELEGRAM_TOKEN` лежит ваш токен бота о том как его узнать я расскажу ниже.
-+ В переменной `TELEGRAM_IMPLICIT_FLOW_TOKEN` лежит ваш апи ключ с помощью которого бот получает картинки космоса.
++ В переменной `NASA_IMPLICIT_FLOW_TOKEN` лежит ваш апи ключ с помощью которого бот получает картинки космоса.
 + В переменной `SPACEX_LAUNCH_NUMBER` лежит количество раз сколько будет запускаться функция `get_spacex_picture_url`.  *_Вы можете менять это число_*
 
 #### Как узнать ApiToken
