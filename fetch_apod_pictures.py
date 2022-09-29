@@ -22,7 +22,8 @@ def get_apod_pictures(api_key):
 
 
 if __name__ == '__main__':
-    api_key = dotenv_values(".env")["TELEGRAM_IMPLICIT_FLOW_TOKEN"]
+    api_key = dotenv_values(".env")["NASA_IMPLICIT_FLOW_TOKEN"]
+    os.makedirs("APOD_pictures")
 
 
 try:

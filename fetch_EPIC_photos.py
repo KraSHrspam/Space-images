@@ -24,7 +24,7 @@ def get_epic_pictures(api_key):
         print(f"#Загружаю Эпик фотку номер {epic_picture_num}")
 
 if __name__ == '__main__':
-    api_key = dotenv_values(".env")["TELEGRAM_IMPLICIT_FLOW_TOKEN"]
+    api_key = dotenv_values(".env")["NASA_IMPLICIT_FLOW_TOKEN"]
 
     try:
             get_epic_pictures(api_key)
