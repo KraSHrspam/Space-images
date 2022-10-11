@@ -6,15 +6,14 @@
 
 Для начала вам нужно создать файлик `.env` Он должен выглядеть вот так
 ```
-TELEGRAM_TOKEN=5136941251:AAG7HY1337YHrSyg0gZNS64sLрsvFJxF2UE
+TELEGRAM_TOKEN=5136941251:AAG7HY1337YHrSyg0gZNS64sLрsvFJxF2UA
 TELEGRAM_IMPLICIT_FLOW_TOKEN=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbV
-PERIOD=10.0
 SPACEX_LAUNCH_ID=12344321
 ```
 + В переменной `TELEGRAM_TOKEN` лежит ваш токен бота о том как его узнать я расскажу ниже.
 + В переменной `TELEGRAM_IMPLICIT_FLOW_TOKEN` лежит ваш апи ключ с помощью которого бот получает картинки космоса.
-+ В переменной `PERIOD` лежит время через которое бот будет отправлять картинки. Время указываеться в секундах _точку с нулем писать обязательно!_
 + В переменной `SPACEX_LAUNCH_ID` лежит ID запуска ракеты.  *_Вы можете менять этот ID_*
+
 
 #### Как узнать ApiToken
 - Вы можете узнать свой апи на этом [сайте](https://api.nasa.gov/#apod).
