@@ -1,5 +1,6 @@
 import os
 import requests
+from dotenv import load_dotenv
 
 from tools import picture_download
 
@@ -14,8 +15,10 @@ def fetch_spacex_last_launch(launch_id, picture_dir):
         picture_name = f"SpaceX{picture_num}"
         picture_download(picture, os.path.join(picture_dir, picture_name))
 
+
 if __name__ == '__main__':
-    launch_id = os.getenv("SPACEX_LAUNCH_ID","5eb87d46ffd86e000604b388")
+    load_dotenv
+    launch_id = os.getenv("SPACEX_LAUNCH_ID", "5eb87d46ffd86e000604b388")
     picture_dir = "SpaceX_pictures"
     os.makedirs(picture_dir, exist_ok=True)
     fetch_spacex_last_launch(launch_id, picture_dir)

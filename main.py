@@ -5,6 +5,7 @@ from time import sleep
 import telegram
 from dotenv import dotenv_values
 EPIC_path="EPIC_pictures"
+period = "14400"
 
 
 def publish_infinite(token):
@@ -20,6 +21,5 @@ def publish_infinite(token):
 
 if __name__ == '__main__':
     api_key = dotenv_values(".env")["NASA_IMPLICIT_FLOW_TOKEN"]
-    period = dotenv_values(".env")["PERIOD"]
     token = dotenv_values(".env")["TELEGRAM_TOKEN"]
     chat_id = dotenv_values(".env")["TELEGRAM_CHAT_ID"]
