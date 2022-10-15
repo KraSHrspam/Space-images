@@ -23,10 +23,12 @@ def get_epic_pictures(api_key):
         picture_download(finished_epic_link, os.path.join(f"{EPIC_file_path}", picture_name), params=payload)
         print(f"#Загружаю Эпик фотку номер {epic_picture_num}")
 
+
 if __name__ == '__main__':
     api_key = dotenv_values(".env")["NASA_IMPLICIT_FLOW_TOKEN"]
+    os.makedirs("EPIC_pictures", exist_ok=True)
 
     try:
-            get_epic_pictures(api_key)
+        get_epic_pictures(api_key)
     except requests.exceptions.HTTPError as error:
-            logging.error("Can't get data from server:\n{0}".format(error))
+        logging.error("Can't get data from server:\n{0}".format(error))
