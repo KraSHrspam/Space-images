@@ -10,7 +10,7 @@ def get_image_extension(picture_link):
     return extension_of_url[1]
 
 
-def picture_download(link, picture_path, params=""):
+def picture_download(link, picture_path, params=None):
     response = requests.get(link, params=params)
     response.raise_for_status()
     with open(f"{picture_path}{get_image_extension(link)}", 'wb') as file:

@@ -1,7 +1,6 @@
 import logging
 import os
 import requests
-from datetime import datetime
 
 from dotenv import dotenv_values
 

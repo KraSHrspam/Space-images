@@ -8,18 +8,18 @@ EPIC_path="EPIC_pictures"
 period = "14400"
 
 
-def publish_infinite(token):
+def publish_infinite(token, chat_id):
     bot = telegram.Bot(token=token)
     while True:
         for address, dirs, files in os.walk(f"{EPIC_path}"):
             for file in files:
-                picture_address = os.path.join(addres, file)
+                picture_address = os.path.join(address, file)
                 with open(picture_address, "rb") as file:
-                    bot.send_photo(chat_id=f"{CHAT_ID}", photo=file.read)
+                    bot.send_photo(chat_id, photo=file.read())
                 sleep(float(period))
 
 
 if __name__ == '__main__':
-    api_key = dotenv_values(".env")["NASA_IMPLICIT_FLOW_TOKEN"]
     token = dotenv_values(".env")["TELEGRAM_TOKEN"]
     chat_id = dotenv_values(".env")["TELEGRAM_CHAT_ID"]
+    publish_infinite(token, chat_id)
