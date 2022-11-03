@@ -4,7 +4,7 @@ import requests
 
 from dotenv import dotenv_values
 
-from tools import picture_download
+from tools import download_pictures
 APOD_file_path="APOD_pictures"
 COUNT=50
 
@@ -17,7 +17,7 @@ def get_apod_pictures(api_key):
     response.raise_for_status()
     for apod_picture_num, picture_apod in enumerate(response.json()):
         if picture_apod["media_type"] == "image":
-            picture_download(picture_apod["url"], os.path.join(APOD_file_path, f"{apod_picture_num}"))
+            download_pictures(picture_apod["url"], os.path.join(APOD_file_path, f"{apod_picture_num}"))
             print(f"#Загружаю Апод фотку номер {apod_picture_num}")
 
 

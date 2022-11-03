@@ -2,7 +2,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-from tools import picture_download
+from tools import download_pictures
 
 
 def fetch_spacex_last_launch(launch_id, picture_dir):
@@ -13,7 +13,7 @@ def fetch_spacex_last_launch(launch_id, picture_dir):
     for picture_num, picture in enumerate(pictures_of_rocket):
         print(f"#Загружаю СпейсИКС фотку номер {picture_num}")
         picture_name = f"SpaceX{picture_num}"
-        picture_download(picture, os.path.join(picture_dir, picture_name))
+        download_pictures(picture, os.path.join(picture_dir, picture_name))
 
 
 if __name__ == '__main__':

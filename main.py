@@ -1,25 +1,31 @@
 import os
-import requests
+import logging
 from time import sleep
 
 import telegram
-from dotenv import dotenv_values
-EPIC_path="EPIC_pictures"
-period = "14400"
+from dotenv import load_dotenv
 
 
-def publish_infinite(token, chat_id):
+def publish_infinite(token, chat_id, period, pictures_dir):
     bot = telegram.Bot(token=token)
     while True:
-        for address, dirs, files in os.walk(f"{EPIC_path}"):
+        for address, dirs, files in os.walk(pictures_dir):
             for file in files:
-                picture_address = os.path.join(address, file)
-                with open(picture_address, "rb") as file:
-                    bot.send_photo(chat_id, photo=file.read())
-                sleep(float(period))
+                try:
+                    picture_address = os.path.join(address, file)
+                    with open(picture_address, "rb") as file:
+                        bot.send_photo(chat_id, photo=file.read())
+                    sleep(float(period))
+                except telegram.error.TelegramError:
+                    logging.exception()
+
+
 
 
 if __name__ == '__main__':
-    token = dotenv_values(".env")["TELEGRAM_TOKEN"]
-    chat_id = dotenv_values(".env")["TELEGRAM_CHAT_ID"]
-    publish_infinite(token, chat_id)
+    load_dotenv()
+    pictures_dir = os.getenv("PICTURE_DIR", "EPIC_pictures")
+    period = int(os.getenv("PERIOD", "14400"))
+    token = os.getenv("TELEGRAM_TOKEN")
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+    publish_infinite(token, chat_id, period, pictures_dir)
