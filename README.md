@@ -7,7 +7,7 @@
 Для начала вам нужно создать файлик `.env` Он должен выглядеть вот так
 ```
 TELEGRAM_TOKEN=5136479351:AAG7H078n17prSyg0gZNS64sL2svFJxF2Uh
-NASA_IMPLICIT_FLOW_TOKEN=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbk
+NASA_IMPLICIT_FLOW_TOKEN=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbV
 TELEGRAM_CHAT_ID="@EPIC_NASA_pictures_group"
 SPACEX_LAUNCH_ID=5eb87d46ffd86e000604b389
 ```
