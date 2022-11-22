@@ -6,13 +6,15 @@
 
 Для начала вам нужно создать файлик `.env` Он должен выглядеть вот так
 ```
-TELEGRAM_TOKEN=5136941251:AAG7HY1337YHrSyg0gZNS64sLрsvFJxF2UA
-TELEGRAM_IMPLICIT_FLOW_TOKEN=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbV
-SPACEX_LAUNCH_ID=12344321
+TELEGRAM_TOKEN=5136479351:AAG7H078n17prSyg0gZNS64sL2svFJxF2Uh
+NASA_IMPLICIT_FLOW_TOKEN=YjSmH3pN6d3J7YGlSmNN1NdlYnXnHvmak9DpbLbV
+TELEGRAM_CHAT_ID="@EPIC_NASA_pictures_group"
+SPACEX_LAUNCH_ID=5eb87d46ffd86e000604b389
 ```
 + В переменной `TELEGRAM_TOKEN` лежит ваш токен бота о том как его узнать я расскажу ниже.
-+ В переменной `TELEGRAM_IMPLICIT_FLOW_TOKEN` лежит ваш апи ключ с помощью которого бот получает картинки космоса.
++ В переменной `NASA_IMPLICIT_FLOW_TOKEN` лежит ваш апи ключ с помощью которого бот получает картинки космоса.
 + В переменной `SPACEX_LAUNCH_ID` лежит ID запуска ракеты.  *_Вы можете менять этот ID_*
++ В переменной `TELEGRAM_CHAT_ID` лежит ID чата которого вам нужно создать
 
 
 #### Как узнать ApiToken
