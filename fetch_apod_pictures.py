@@ -15,10 +15,10 @@ def get_apod_pictures(api_key):
     apod_link = "https://api.nasa.gov/planetary/apod"
     response = requests.get(apod_link, params=payload)
     response.raise_for_status()
-    for apod_picture_num, picture_apod in enumerate(response.json()):
+    for apod_picture_number, picture_apod in enumerate(response.json()):
         if picture_apod["media_type"] == "image":
-            download_pictures(picture_apod["url"], os.path.join(APOD_file_path, f"{apod_picture_num}"))
-            print(f"#Загружаю Апод фотку номер {apod_picture_num}")
+            download_pictures(picture_apod["url"], os.path.join(APOD_file_path, f"{apod_picture_number}"))
+            print(f"#Загружаю Апод фотку номер {apod_picture_number}")
 
 
 if __name__ == '__main__':

@@ -13,13 +13,16 @@ def publish_infinite(token, chat_id, period, pictures_dir):
             for file in files:
                 try:
                     picture_address = os.path.join(address, file)
-                    with open(picture_address, "rb") as file:
-                        bot.send_photo(chat_id, photo=file.read())
+                    publish_photo(picture_address, bot, chat_id)
                     sleep(float(period))
                 except telegram.error.TelegramError:
+                    time.sleep(60)
                     logging.exception("Ошибка телеграмм")
 
 
+def publish_photo(path, bot, chat_id):
+    with open(path, "rb") as file:
+        bot.send_photo(chat_id, photo=file.read())
 
 
 if __name__ == '__main__':
@@ -29,3 +32,4 @@ if __name__ == '__main__':
     token = os.getenv("TELEGRAM_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
     publish_infinite(token, chat_id, period, pictures_dir)
+    

@@ -14,14 +14,14 @@ def get_epic_pictures(api_key):
     epic_link = "https://api.nasa.gov/EPIC/api/natural/images"
     response = requests.get(epic_link, params=payload)
     response.raise_for_status()
-    for epic_picture_num, epic_picture in enumerate(response.json()):
+    for epic_picture_number, epic_picture in enumerate(response.json()):
         date = epic_picture["date"]
         parsed_date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
         date_with_slash = parsed_date.strftime("%Y/%m/%d")
         finished_epic_link = f"https://api.nasa.gov/EPIC/archive/natural/{date_with_slash}/png/{epic_picture['image']}.png"
-        picture_name = f"EPIC{epic_picture_num}"
+        picture_name = f"EPIC{epic_picture_number}"
         download_pictures(finished_epic_link, os.path.join(f"{EPIC_file_path}", picture_name), params=payload)
-        print(f"#Загружаю Эпик фотку номер {epic_picture_num}")
+        print(f"#Загружаю Эпик фотку номер {epic_picture_number}")
 
 
 if __name__ == '__main__':

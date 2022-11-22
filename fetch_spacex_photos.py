@@ -10,9 +10,9 @@ def fetch_spacex_last_launch(launch_id, picture_dir):
     response = requests.get(link)
     response.raise_for_status()
     pictures_of_rocket = response.json()["links"]["flickr"]["original"]
-    for picture_num, picture in enumerate(pictures_of_rocket):
-        print(f"#Загружаю СпейсИКС фотку номер {picture_num}")
-        picture_name = f"SpaceX{picture_num}"
+    for picture_number, picture in enumerate(pictures_of_rocket):
+        print(f"#Загружаю СпейсИКС фотку номер {picture_number}")
+        picture_name = f"SpaceX{picture_number}"
         download_pictures(picture, os.path.join(picture_dir, picture_name))
 
 
