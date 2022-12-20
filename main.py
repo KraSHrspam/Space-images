@@ -16,8 +16,8 @@ def publish_infinite(token, chat_id, period, pictures_dir):
                     publish_photo(picture_address, bot, chat_id)
                     sleep(float(period))
                 except telegram.error.TelegramError:
-                    time.sleep(60)
-                    logging.exception("Ошибка телеграмм")
+                    sleep(60)
+                    logging.exception("Ошибка сети")
 
 
 def publish_photo(path, bot, chat_id):
